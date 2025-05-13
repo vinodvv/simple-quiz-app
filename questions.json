@@ -1,17 +1,32 @@
 [
     {
         "question": "What is the capital of France?",
-        "choices": ["Berlin", "Paris", "Madrid", "Rome"],
+        "choices": [
+            "Berlin",
+            "Paris",
+            "Madrid",
+            "Rome"
+        ],
         "answer": 2
     },
     {
         "question": "Which planet is known as the Red Planet?",
-        "choices": ["Earth", "Venus", "Mars", "Jupiter"],
+        "choices": [
+            "Earth",
+            "Venus",
+            "Mars",
+            "Jupiter"
+        ],
         "answer": 3
     },
     {
         "question": "What is the chemical symbol for water?",
-        "choices": ["H2O", "O2", "CO2", "H2"],
+        "choices": [
+            "H2O",
+            "O2",
+            "CO2",
+            "H2"
+        ],
         "answer": 1
     }
 ]
