@@ -82,8 +82,17 @@ def run_quiz(questions):
 
 def add_question():
     print("\nAdd a New Question")
-    question = input("Enter the question: ").strip()
+    question_text = input("Enter the question: ").strip()
 
+    # Load existing questions and check for duplicates (case-insensitive)
+    questions = load_questions(QUESTION_FILE)
+    existing_questions = [q["question"].strip().lower() for q in questions]
+
+    if question_text.lower() in existing_questions:
+        print("This question already exists and will not be added again.\n")
+        return
+
+    # Collect answer options
     choices = []
     for i in range(4):
         choice = input(f"Enter choice {i + 1}: ").strip()
@@ -98,12 +107,11 @@ def add_question():
             print("Invalid input. Please enter a number between 1 and 4.")
 
     new_question = {
-        "question": question,
+        "question": question_text,
         "choices": choices,
         "answer": correct
     }
 
-    questions = load_questions(QUESTION_FILE)
     questions.append(new_question)
     save_questions(QUESTION_FILE, questions)
     print("Question added successfully!\n")
