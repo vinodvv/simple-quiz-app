@@ -1,13 +1,23 @@
 # Simple Quiz Game
+import json
+import random
 
-# List of questions (question, choices, correct answer [1-based index])
-quiz_questions = [
-    ("What is the capital of France?", ["Berlin", "Paris", "Madrid", "Rome"], 2),
-    ("Which planet is known as the Red Planet?", ["Earth", "Venus", "Mars", "Jupiter"], 3),
-    ("What is the chemical symbol for water?", ["H2O", "O2", "CO2", "H2"], 1),
-]
 
-def ask_question(question, choices, correct_answer):
+# Load quiz questions from a JSON file
+def load_questions(filename):
+    try:
+        with open(filename, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error loading questions: {e}")
+        return []
+
+
+def ask_question(question_data):
+    question = question_data["question"]
+    choices = question_data["choices"]
+    correct_answer = question_data["answer"]  # 1-based index
+
     print(question)
     for i, choice in enumerate(choices, 1):
         print(f"{i}. {choice}")
@@ -32,11 +42,13 @@ def ask_question(question, choices, correct_answer):
 
 
 def run_quiz(questions):
+    random.shuffle(questions)  # Shuffle question order
     score = 0
 
+    print("\nWelcome to the Quiz!\n")
     # Iterate through the list of questions
-    for question, choices, correct_answer in questions:
-        if ask_question(question, choices, correct_answer):
+    for question_data in questions:
+        if ask_question(question_data):
             score += 1
 
     # Display final score
@@ -45,4 +57,6 @@ def run_quiz(questions):
 
 # Run the quiz
 if __name__ == "__main__":
-    run_quiz(quiz_questions)
+    quiz_questions = load_questions("questions.json")
+    if quiz_questions:
+        run_quiz(quiz_questions)
