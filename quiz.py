@@ -16,10 +16,17 @@ def load_questions(filename):
 def ask_question(question_data):
     question = question_data["question"]
     choices = question_data["choices"]
-    correct_answer = question_data["answer"]  # 1-based index
+    correct_answer_index = question_data["answer"] - 1  # Convert 1-based to 0-based index
 
+    # Pair each choice with whether it's correct
+    choices_with_flag = [(choice, idx == correct_answer_index) for idx, choice in enumerate(choices)]
+
+    # Shuffle the options
+    random.shuffle(choices_with_flag)
+
+    # Display the question and choices
     print(question)
-    for i, choice in enumerate(choices, 1):
+    for i, (choice, _) in enumerate(choices_with_flag, 1):
         print(f"{i}. {choice}")
 
     # Get user's answer
@@ -28,16 +35,23 @@ def ask_question(question_data):
 
         # Check if the answer is correct
         if answer.isdigit() and 1 <= int(answer) <= len(choices):
-            answer = int(answer)
+            answer_index = int(answer) - 1
             break
         else:
             print("Invalid input. Please enter a number between 1 and 4.")
 
-    if answer == correct_answer:
+    # Check if the selected choice was the correct one
+    selected_choice_is_correct = choices_with_flag[answer_index][1]
+
+    if selected_choice_is_correct:
         print("Correct!\n")
         return True
     else:
-        print(f"Wrong! The correct answer was {correct_answer}. {choices[correct_answer - 1]}\n")
+        # Find and display the correct answer
+        for i, (choice, is_correct) in enumerate(choices_with_flag):
+            if is_correct:
+                print(f"Wrong! The correct answer was {i + 1}. {choice}\n")
+                break
         return False
 
 
