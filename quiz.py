@@ -1,9 +1,9 @@
 # Simple Quiz Game
 
-# List of questions (question, choices, correct answer)
+# List of questions (question, choices, correct answer [1-based index])
 quiz_questions = [
     ("What is the capital of France?", ["Berlin", "Paris", "Madrid", "Rome"], 2),
-    ("Which Planet is known as the Red Planet?", ["Earth", "Venus", "Mars", "Jupiter"], 3),
+    ("Which planet is known as the Red Planet?", ["Earth", "Venus", "Mars", "Jupiter"], 3),
     ("What is the chemical symbol for water?", ["H2O", "O2", "CO2", "H2"], 1),
 ]
 
@@ -13,14 +13,21 @@ def ask_question(question, choices, correct_answer):
         print(f"{i}. {choice}")
 
     # Get user's answer
-    answer = input("Your answer (1/2/3/4): ").strip()
+    while True:
+        answer = input("Your answer (1/2/3/4): ").strip()
 
-    # Check if the answer is correct
-    if answer.isdigit() and int(answer) == correct_answer:
+        # Check if the answer is correct
+        if answer.isdigit() and 1 <= int(answer) <= len(choices):
+            answer = int(answer)
+            break
+        else:
+            print("Invalid input. Please enter a number between 1 and 4.")
+
+    if answer == correct_answer:
         print("Correct!\n")
         return True
     else:
-        print(f"Wrong! the correct answer was {correct_answer}. {choices[correct_answer - 1]}\n")
+        print(f"Wrong! The correct answer was {correct_answer}. {choices[correct_answer - 1]}\n")
         return False
 
 
@@ -37,4 +44,5 @@ def run_quiz(questions):
 
 
 # Run the quiz
-run_quiz(quiz_questions)
+if __name__ == "__main__":
+    run_quiz(quiz_questions)
