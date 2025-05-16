@@ -28,5 +28,25 @@
             "H2"
         ],
         "answer": 1
+    },
+    {
+        "question": "Which animal is known as the 'Ship of the Desert'?",
+        "choices": [
+            "Camel",
+            "Lion",
+            "Tiger",
+            "Wolf"
+        ],
+        "answer": 1
+    },
+    {
+        "question": "How many days are there in a week?",
+        "choices": [
+            "6 days",
+            "10 days",
+            "8 days",
+            "7 days"
+        ],
+        "answer": 4
     }
 ]
